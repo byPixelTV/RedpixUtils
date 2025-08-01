@@ -1,0 +1,4 @@
+discord-message: "<red><click:open_url:https://discord.gg/redpix>discord.gg/redpix</red>"
+kill-message: "<color:#ff0000>💀</color> <color:#ff0000>%victim%</color> wurde von <color:#ff0000>%killer%</color> getötet!"
+# Luckperms (https://api.extendedclip.com/expansions/luckperms/) and Player (https://api.extendedclip.com/expansions/player/) extension required
+chat-format: "%luckperms_prefix% &f%player_name%: <grey>%message%</grey>"
