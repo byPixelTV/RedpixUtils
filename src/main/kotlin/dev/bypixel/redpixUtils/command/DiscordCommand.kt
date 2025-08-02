@@ -9,7 +9,7 @@ object DiscordCommand {
     init {
         commandTree("discord") {
             withAliases("dc")
-            playerExecutor { player, arguments ->
+            playerExecutor { player, _ ->
                 player.sendMessage(MiniMessage.miniMessage().deserialize(RedpixUtils.instance.config.getString("discord-message", "null") ?: "null"))
             }
         }

@@ -2,3 +2,46 @@ discord-message: "<red><click:open_url:https://discord.gg/redpix>discord.gg/redp
 kill-message: "<color:#ff0000>💀</color> <color:#ff0000>%victim%</color> wurde von <color:#ff0000>%killer%</color> getötet!"
 # Luckperms (https://api.extendedclip.com/expansions/luckperms/) and Player (https://api.extendedclip.com/expansions/player/) extension required
 chat-format: "%luckperms_prefix% &f%player_name%: <grey>%message%</grey>"
+
+commandWhitelist:
+  - "dc"
+  - "discord"
+  - "spawn"
+
+commandNotFoundMsg: "<grey>Der Command <color:#ff0000>/%command%</color> existiert <color:#ff0000>nicht!</color></grey>"
+
+# Server extension required (https://api.extendedclip.com/expansions/server/)
+uniqueJoinMessage: "<br><grey>Willkommen <green><u>%player_name%</u></green> auf <red>RedPix.net!</red> <grey>(#%server_unique_joins%)</grey></grey><br>"
+
+joinMessage: "<grey>[<green>+</green>] %player_name%</grey>"
+quitMessage: "<grey>[<red>-</red>] %player_name%</grey>"
+
+enderpearlCooldown:
+  # you have to restart the server after changing the enabled option to apply the changes
+  enabled: true
+  cooldown: 30
+  cooldownMessage: "<grey>Du musst noch <red>%seconds% Sekunden</red> warten, um wieder eine <red>Enderpearl</red> nutzen zu können!</grey>"
+
+spawn:
+  # you have to restart the server after changing the enabled option to apply the changes
+  enabled: true
+  teleportOnFirstJoin: true
+  teleportOnJoin: false
+  # only teleports if player doesn't have a bed spawn set
+  teleportOnDeath: true
+  location:
+    world: "world"
+    x: 0.0
+    y: 100.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
+  # cooldown in seconds
+  countdown: 3
+  countdownTeleportStartMessage: "<grey>Du wirst in <aqua>%seconds% Sekunden</aqua> teleportiert! <red>Nicht bewegen!</red></grey>"
+  countdownMessage: "<grey>ᴅᴜ ᴡɪʀꜱᴛ ɪɴ <aqua>%seconds% ꜱᴇᴋᴜɴᴅᴇɴ</aqua> ᴛᴇʟᴇᴘᴏʀᴛɪᴇʀᴛ</grey>"
+  countdownSuccessMessage: "<grey>Du wurdest <green>erfolgreich</green> zum <green>Spawn</green> teleportiert!</grey>"
+  countdownSuccessMessageActionbar: "<green>ᴅᴜ ᴡᴜʀᴅᴇꜱᴛ ᴛᴇʟᴇᴘᴏʀᴛɪᴇʀᴛ</green>"
+  countdownFailedMessageActionbar: "<red>ᴅᴇʀ ᴛᴇʟᴇᴘᴏʀᴛ ᴡᴜʀᴅᴇ ᴀʙɢᴇʙʀᴏᴄʜᴇɴ</red>"
+  countdownFailedMessage: "<red>Der Teleport wurde <red>abgebrochen</red>, da du dich bewegt hast!</red>"
+  countdownAlreadyTeleportingMessage: "<grey>Du wirst bereits <aqua>teleportiert!</aqua></grey>"

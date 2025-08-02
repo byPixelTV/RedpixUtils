@@ -42,7 +42,7 @@ object ChatMessageUtil {
     fun formatMessage(player: Player, message: String): Component {
         val configMessage = RedpixUtils.instance.config.getString("chat-format")!!
 
-        return if (player.hasPermission("redpix.chat.color")) {
+        return if (player.hasPermission("redpixutils.chat.color")) {
             mm.deserialize(PapiUtil.parsePlaceholders(player, convertToMinimessage(configMessage).replace("%message%", convertToMinimessage(message))))
         } else {
             val filteredMessage = message.replace(Regex("<(?!/?u\\b)[^>]*>"), "")
