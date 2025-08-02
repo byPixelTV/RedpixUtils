@@ -5,11 +5,15 @@ import dev.bypixel.redpixUtils.util.ChatMessageUtil.convertToMinimessage
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.metadata.FixedMetadataValue
+import org.bukkit.metadata.MetadataValue
 
 object PlayerDeathListener {
     val event = listen<PlayerDeathEvent> {
         val player = it.entity
         val killer = it.entity.killer
+
+        player.setMetadata("redpixutils:deathflag", FixedMetadataValue(RedpixUtils.instance, true))
 
         it.deathMessage(Component.text(""))
 
