@@ -11,6 +11,7 @@ import dev.bypixel.redpixUtils.commandWhitelist.listener.PlayerCommandPreprocess
 import dev.bypixel.redpixUtils.commandWhitelist.listener.PlayerCommandSendListener
 import dev.bypixel.redpixUtils.commandWhitelist.listener.UnknownCommandListener
 import dev.bypixel.redpixUtils.listener.AsyncChatListener
+import dev.bypixel.redpixUtils.listener.ExplosionsListener
 import dev.bypixel.redpixUtils.listener.PlayerDeathListener
 import dev.bypixel.redpixUtils.listener.PlayerJoinListener
 import dev.bypixel.redpixUtils.listener.PlayerQuitListener
@@ -60,6 +61,7 @@ class RedpixUtils : JavaPlugin() {
         PlayerDeathListener
         PlayerJoinListener
         PlayerQuitListener
+        ExplosionsListener
 
         protocolManager.addPacketListener(RespawnPacketListener(this))
 
@@ -80,6 +82,9 @@ class RedpixUtils : JavaPlugin() {
         PlayerJoinListener.event.unregister()
         ProjectileLaunchListener.event.unregister()
         PlayerQuitListener.event.unregister()
+        ExplosionsListener.disableExplosionEntityEvent.unregister()
+        ExplosionsListener.blockClick.unregister()
+        ExplosionsListener.disableDamageEvent.unregister()
         protocolManager.removePacketListener(RespawnPacketListener(this))
 
         CommandAPI.unregister("discord")
