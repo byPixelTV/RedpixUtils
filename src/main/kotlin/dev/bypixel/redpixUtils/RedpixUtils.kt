@@ -58,9 +58,6 @@ class RedpixUtils : JavaPlugin() {
 
         AsyncChatListener
         PlayerDeathListener
-        PlayerCommandSendListener
-        PlayerCommandPreprocessListener
-        UnknownCommandListener
         PlayerJoinListener
         PlayerQuitListener
 
