@@ -13,12 +13,14 @@ import dev.bypixel.redpixUtils.commandWhitelist.listener.UnknownCommandListener
 import dev.bypixel.redpixUtils.listener.AsyncChatListener
 import dev.bypixel.redpixUtils.listener.ExplosionsListener
 import dev.bypixel.redpixUtils.listener.CraftItemListener
+import dev.bypixel.redpixUtils.listener.CrafterCraftListener
 import dev.bypixel.redpixUtils.listener.PlayerDeathListener
 import dev.bypixel.redpixUtils.listener.PlayerJoinListener
 import dev.bypixel.redpixUtils.listener.PlayerQuitListener
 import dev.bypixel.redpixUtils.listener.ProjectileLaunchListener
 import dev.bypixel.redpixUtils.listener.packet.RespawnPacketListener
 import dev.bypixel.redpixUtils.listener.unregister
+import dev.bypixel.redpixUtils.scheduler.MaceGlowScheduler
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
 import org.bukkit.plugin.java.JavaPlugin
@@ -64,6 +66,9 @@ class RedpixUtils : JavaPlugin() {
         PlayerQuitListener
         ExplosionsListener
         CraftItemListener
+        CrafterCraftListener
+
+        MaceGlowScheduler.start()
 
         protocolManager.addPacketListener(RespawnPacketListener(this))
 
@@ -75,6 +80,8 @@ class RedpixUtils : JavaPlugin() {
     override fun onDisable() {
         // Plugin shutdown logic
         CommandAPI.onDisable()
+
+        MaceGlowScheduler.stop()
 
         AsyncChatListener.event.unregister()
         PlayerDeathListener.event.unregister()
@@ -88,6 +95,7 @@ class RedpixUtils : JavaPlugin() {
         ExplosionsListener.blockClick.unregister()
         ExplosionsListener.disableDamageEvent.unregister()
         CraftItemListener.event.unregister()
+        CrafterCraftListener.event.unregister()
         protocolManager.removePacketListener(RespawnPacketListener(this))
 
         CommandAPI.unregister("discord")

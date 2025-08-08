@@ -12,6 +12,8 @@ val versionString = "1.1.4"
 group = "dev.bypixel"
 version = versionString
 
+runPaper.folia.registerTask()
+
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
