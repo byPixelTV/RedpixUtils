@@ -43,10 +43,12 @@ object ChatMessageUtil {
         val configMessage = RedpixUtils.instance.config.getString("chat-format")!!
 
         return if (player.hasPermission("redpixutils.chat.color")) {
-            mm.deserialize(PapiUtil.parsePlaceholders(player, convertToMinimessage(configMessage).replace("%message%", convertToMinimessage(message))))
+            mm.deserialize(PapiUtil.parsePlaceholders(player, convertToMinimessage(configMessage.replace("%luckperms_prefix%",
+                convertToMinimessage(PapiUtil.getPlaceholder(player, "%luckperms_prefix%")))).replace("%message%", convertToMinimessage(message))))
         } else {
             val filteredMessage = message.replace(Regex("<(?!/?u\\b)[^>]*>"), "")
-            mm.deserialize(PapiUtil.parsePlaceholders(player, "<grey>${convertToMinimessage(configMessage).replace("%message%", filteredMessage)}</grey>"))
+            mm.deserialize(PapiUtil.parsePlaceholders(player, "<grey>${convertToMinimessage(configMessage.replace("%luckperms_prefix%",
+                convertToMinimessage(PapiUtil.getPlaceholder(player, "%luckperms_prefix%")))).replace("%message%", filteredMessage)}</grey>"))
         }
     }
 

@@ -10,6 +10,8 @@ commandWhitelist:
 
 commandNotFoundMsg: "<grey>Der Command <color:#ff0000>/%command%</color> existiert <color:#ff0000>nicht!</color></grey>"
 
+allowMaceCrafting: false
+
 # Server extension required (https://api.extendedclip.com/expansions/server/)
 uniqueJoinMessage: "<br><grey>Willkommen <green><u>%player_name%</u></green> auf <red>RedPix.net!</red> <grey>(#%server_unique_joins%)</grey></grey><br>"
 

@@ -12,6 +12,7 @@ import dev.bypixel.redpixUtils.commandWhitelist.listener.PlayerCommandSendListen
 import dev.bypixel.redpixUtils.commandWhitelist.listener.UnknownCommandListener
 import dev.bypixel.redpixUtils.listener.AsyncChatListener
 import dev.bypixel.redpixUtils.listener.ExplosionsListener
+import dev.bypixel.redpixUtils.listener.CraftItemListener
 import dev.bypixel.redpixUtils.listener.PlayerDeathListener
 import dev.bypixel.redpixUtils.listener.PlayerJoinListener
 import dev.bypixel.redpixUtils.listener.PlayerQuitListener
@@ -62,6 +63,7 @@ class RedpixUtils : JavaPlugin() {
         PlayerJoinListener
         PlayerQuitListener
         ExplosionsListener
+        CraftItemListener
 
         protocolManager.addPacketListener(RespawnPacketListener(this))
 
@@ -85,6 +87,7 @@ class RedpixUtils : JavaPlugin() {
         ExplosionsListener.disableExplosionEntityEvent.unregister()
         ExplosionsListener.blockClick.unregister()
         ExplosionsListener.disableDamageEvent.unregister()
+        CraftItemListener.event.unregister()
         protocolManager.removePacketListener(RespawnPacketListener(this))
 
         CommandAPI.unregister("discord")
