@@ -11,6 +11,7 @@ import io.papermc.paper.entity.TeleportFlag
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.minimessage.MiniMessage
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerTeleportEvent
 
@@ -30,9 +31,42 @@ object CheckCommand {
                         targetPlayer.sendMessage(MiniMessage.miniMessage().deserialize(RedpixUtils.instance.config.getString("check.startMessage").toString()))
 
                         val groundLocation = targetPlayer.location.clone()
-                        groundLocation.y = targetPlayer.world.getHighestBlockYAt(groundLocation.blockX, groundLocation.blockZ).toDouble()
-                        targetPlayer.teleportAsync(groundLocation, PlayerTeleportEvent.TeleportCause.PLUGIN, TeleportFlag.EntityState.RETAIN_PASSENGERS)
-                        targetPlayer.playSound(Sound.sound(Key.key(Key.MINECRAFT_NAMESPACE, RedpixUtils.instance.config.getString("check.startSound").toString()), Sound.Source.MASTER, 25f, 1f))
+
+                        RedpixUtils.instance.scheduler.runTask(groundLocation) {
+                            val world = targetPlayer.world
+                            val startY = groundLocation.blockY
+
+                            // Prüfen ob unter dem Spieler Luft ist
+                            if (!world.getBlockAt(groundLocation.blockX, startY - 1, groundLocation.blockZ).type.isSolid) {
+                                var y = startY
+
+                                // Nach unten scannen bis wir auf einen soliden Block treffen
+                                for (currentY in startY downTo world.minHeight) {
+                                    val block = world.getBlockAt(groundLocation.blockX, currentY, groundLocation.blockZ)
+                                    if (block.type.isSolid || block.type == Material.WATER || block.type == Material.LAVA) {
+                                        y = currentY + 1 // +1 = auf den Block drauf, nicht rein
+                                        break
+                                    }
+                                }
+
+                                groundLocation.y = y.toDouble()
+
+                                targetPlayer.teleportAsync(
+                                    groundLocation,
+                                    PlayerTeleportEvent.TeleportCause.PLUGIN,
+                                    TeleportFlag.EntityState.RETAIN_PASSENGERS
+                                )
+                            }
+
+                            targetPlayer.playSound(
+                                Sound.sound(
+                                    Key.key(Key.MINECRAFT_NAMESPACE, RedpixUtils.instance.config.getString("check.startSound").toString()),
+                                    Sound.Source.MASTER,
+                                    25f,
+                                    1f
+                                )
+                            )
+                        }
                     }
                 }
                 literalArgument("pass") {

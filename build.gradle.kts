@@ -7,7 +7,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
-val versionString = "1.1.5"
+val versionString = "1.1.6"
 
 group = "dev.bypixel"
 version = versionString
