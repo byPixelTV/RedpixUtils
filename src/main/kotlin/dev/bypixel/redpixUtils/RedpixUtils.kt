@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.github.Anon8281.universalScheduler.UniversalScheduler
 import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler
+import dev.bypixel.redpixUtils.command.CheckCommand
 import dev.bypixel.redpixUtils.command.DiscordCommand
 import dev.bypixel.redpixUtils.command.RedpixUtilsCommand
 import dev.bypixel.redpixUtils.command.SpawnCommand
@@ -11,23 +12,37 @@ import dev.bypixel.redpixUtils.commandWhitelist.listener.PlayerCommandPreprocess
 import dev.bypixel.redpixUtils.commandWhitelist.listener.PlayerCommandSendListener
 import dev.bypixel.redpixUtils.commandWhitelist.listener.UnknownCommandListener
 import dev.bypixel.redpixUtils.listener.AsyncChatListener
+import dev.bypixel.redpixUtils.listener.BlockBreakListener
+import dev.bypixel.redpixUtils.listener.BlockPlaceListener
 import dev.bypixel.redpixUtils.listener.ExplosionsListener
 import dev.bypixel.redpixUtils.listener.CraftItemListener
 import dev.bypixel.redpixUtils.listener.CrafterCraftListener
+import dev.bypixel.redpixUtils.listener.EntityDamageByEntityListener
+import dev.bypixel.redpixUtils.listener.PlayerDamageListener
 import dev.bypixel.redpixUtils.listener.PlayerDeathListener
+import dev.bypixel.redpixUtils.listener.PlayerInteractListener
 import dev.bypixel.redpixUtils.listener.PlayerJoinListener
+import dev.bypixel.redpixUtils.listener.PlayerMoveListener
 import dev.bypixel.redpixUtils.listener.PlayerQuitListener
 import dev.bypixel.redpixUtils.listener.ProjectileLaunchListener
 import dev.bypixel.redpixUtils.listener.packet.RespawnPacketListener
 import dev.bypixel.redpixUtils.listener.unregister
+import dev.bypixel.redpixUtils.scheduler.CheckScheduler
 import dev.bypixel.redpixUtils.scheduler.MaceGlowScheduler
+import dev.bypixel.redpixUtils.util.CheckUtil
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
 import org.bukkit.plugin.java.JavaPlugin
+import space.arim.libertybans.api.LibertyBans
+import space.arim.omnibus.Omnibus
+import space.arim.omnibus.OmnibusProvider
 
 class RedpixUtils : JavaPlugin() {
     lateinit var scheduler: TaskScheduler
     lateinit var protocolManager: ProtocolManager
+
+    lateinit var libertyBans: LibertyBans
+    lateinit var omnibus: Omnibus
 
     companion object {
         lateinit var instance: RedpixUtils
@@ -45,6 +60,7 @@ class RedpixUtils : JavaPlugin() {
         saveDefaultConfig()
 
         DiscordCommand
+        CheckCommand
         RedpixUtilsCommand
 
         if (config.getBoolean("spawn.enabled", true)) {
@@ -60,6 +76,9 @@ class RedpixUtils : JavaPlugin() {
         CommandAPI.onEnable()
         protocolManager = ProtocolLibrary.getProtocolManager()
 
+        omnibus = OmnibusProvider.getOmnibus()
+        libertyBans = omnibus.registry.getProvider(LibertyBans::class.java).orElseThrow()
+
         AsyncChatListener
         PlayerDeathListener
         PlayerJoinListener
@@ -67,8 +86,15 @@ class RedpixUtils : JavaPlugin() {
         ExplosionsListener
         CraftItemListener
         CrafterCraftListener
+        BlockBreakListener
+        BlockPlaceListener
+        EntityDamageByEntityListener
+        PlayerDamageListener
+        PlayerInteractListener
+        PlayerMoveListener
 
         MaceGlowScheduler.start()
+        CheckScheduler.start()
 
         protocolManager.addPacketListener(RespawnPacketListener(this))
 
@@ -78,10 +104,13 @@ class RedpixUtils : JavaPlugin() {
     }
 
     override fun onDisable() {
+        CheckUtil.clearChecks()
+
         // Plugin shutdown logic
         CommandAPI.onDisable()
 
         MaceGlowScheduler.stop()
+        CheckScheduler.stop()
 
         AsyncChatListener.event.unregister()
         PlayerDeathListener.event.unregister()
@@ -96,6 +125,12 @@ class RedpixUtils : JavaPlugin() {
         ExplosionsListener.disableDamageEvent.unregister()
         CraftItemListener.event.unregister()
         CrafterCraftListener.event.unregister()
+        BlockBreakListener.event.unregister()
+        BlockPlaceListener.event.unregister()
+        EntityDamageByEntityListener.event.unregister()
+        PlayerDamageListener.event.unregister()
+        PlayerInteractListener.event.unregister()
+        PlayerMoveListener.event.unregister()
         protocolManager.removePacketListener(RespawnPacketListener(this))
 
         CommandAPI.unregister("discord")
@@ -103,6 +138,7 @@ class RedpixUtils : JavaPlugin() {
         CommandAPI.unregister("redpixutils")
         CommandAPI.unregister("rputils")
         CommandAPI.unregister("rpu")
+        CommandAPI.unregister("check")
         CommandAPI.unregister("spawn")
     }
 }

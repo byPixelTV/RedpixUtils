@@ -7,7 +7,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
-val versionString = "1.1.4"
+val versionString = "1.1.5"
 
 group = "dev.bypixel"
 version = versionString
@@ -20,6 +20,18 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://jitpack.io")
     maven("https://repo.dmulloy2.net/repository/public/")
+    maven {
+        name = "arim-mvn-lgpl3"
+        url = uri("https://mvn-repo.arim.space/lesser-gpl3/")
+    }
+    maven {
+        name= "arim-mvn-gpl3"
+        url = uri("https://mvn-repo.arim.space/gpl3/")
+    }
+    maven {
+        name= "arim-mvn-agpl3"
+        url = uri("https://mvn-repo.arim.space/affero-gpl3/")
+    }
 }
 
 dependencies {
@@ -32,6 +44,7 @@ dependencies {
     library(kotlin("stdlib"))
     library("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.github.Anon8281:UniversalScheduler:0.1.7")
+    compileOnly("space.arim.libertybans:bans-api:1.1.1")
 }
 
 tasks {
@@ -50,6 +63,8 @@ tasks {
             url("https://download.luckperms.net/1595/bukkit/loader/LuckPerms-Bukkit-5.5.10.jar")
             // protocolLib
             url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
+            // liberty bans
+            url("https://cdn.modrinth.com/data/PgXAUxLZ/versions/GjvARSgK/LibertyBans_Release-1.1.1.jar")
         }
     }
 
@@ -123,6 +138,10 @@ paper {
             joinClasspath = true
         }
         register("ProtocolLib") {
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+            joinClasspath = true
+        }
+        register("LibertyBans") {
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
             joinClasspath = true
         }

@@ -47,3 +47,17 @@ spawn:
   countdownFailedMessageActionbar: "<red>ᴅᴇʀ ᴛᴇʟᴇᴘᴏʀᴛ ᴡᴜʀᴅᴇ ᴀʙɢᴇʙʀᴏᴄʜᴇɴ</red>"
   countdownFailedMessage: "<red>Der Teleport wurde <red>abgebrochen</red>, da du dich bewegt hast!</red>"
   countdownAlreadyTeleportingMessage: "<grey>Du wirst bereits <aqua>teleportiert!</aqua></grey>"
+
+check:
+  startSound: "block.note_block.pling"
+  passSound: "entity.player.levelup"
+  startMessage: "<grey>Eine <red>Überprüfung</red> wurde gestartet! Bitte joinen dem Discord Server (/discord) und trete dem Support-Warteraum bei. Solltest du den Server verlassen wirst du permanent gebannt.</grey>"
+  passMessage: "<green>Die Überprüfung war <green>erfolgreich</green>! Du kannst jetzt weiter spielen!</green>"
+  banReason: "Check failed"
+  title: "<red>Überprüfung läuft</red>"
+  subtitle: "<grey>Bitte trete dem Support-Warteraum auf Discord bei und verlasse den Server <red><b>NICHT!</b></red></grey>"
+  staffInfoStart: "<grey>Du hast die Überprüfung für <green>%player_name%</green> gestartet. Bitte warte bis er dem Support-Warteraum beigetreten ist.</grey>"
+  staffInfoPass: "<green>Die Überprüfung für <green>%player_name%</green> war <green>erfolgreich</green>!</green>"
+  staffInfoFail: "<red>Die Überprüfung für <green>%player_name%</green> war <red>nicht erfolgreich</red>!</red>"
+  staffInfoNotChecked: "<grey>Der Spieler <green>%player_name%</green> wird gerade nicht überprüft!</grey>"
+  staffInfoAlreadyChecked: "<grey>Der Spieler <green>%player_name%</green> wird bereits überprüft!</grey>"
